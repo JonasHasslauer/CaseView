@@ -9,5 +9,4 @@ einhergehen - mit ausgegeben werden.
 Meilensteine
 
 1. Aufsetzen der Verbindung zur Corona-Api ✅
-2. Unterscheiden, welcher Nutzer der Landkreis will => TODO
 
