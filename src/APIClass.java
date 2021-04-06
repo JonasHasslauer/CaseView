@@ -14,16 +14,12 @@ public class APIClass {
         }
     }
 
-   public void setURL(String url){
-       this.url = url;
-   }
-
    public String getURL(){
        return this.url;
    }
 
     /****
-     *
+     *Returns the specific data to an endpoint of the api.
      *
      *
      * @param url
@@ -31,7 +27,7 @@ public class APIClass {
      * @throws IOException
      * @throws InterruptedException
      */
-    public String getDataFromAPIEndpoint(String url) throws IOException, InterruptedException {
+    public String getDataFromAPIEndpoint(String url){
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -40,7 +36,15 @@ public class APIClass {
                 .uri(URI.create(url))
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = null;
+
+        try{
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return response.body();
 

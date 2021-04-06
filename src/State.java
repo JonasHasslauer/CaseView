@@ -23,13 +23,11 @@ public class State extends APIClass{
         super(url);
     }
 
-    public boolean isValidState(String input){
+    public boolean isValidState(String state){
 
-        boolean state = false;
-
-        if(input.length() == 2){
+        if(state.length() == 2){
             for(String x : this.statesAbb){
-                if(input.equalsIgnoreCase(x)){
+                if(state.equalsIgnoreCase(x)){
                     return true;
                 }
             }

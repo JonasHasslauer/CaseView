@@ -1,5 +1,7 @@
 @author: Jonas Haßlauer
 
+API: https://api.corona-zahlen.org/
+
 Beschreibung
 
 Die Anwendung 'CaseView' soll die aktuellen Corona-Zahlen angeben. Dabei kann der User auswählen, für welchen Landkreis

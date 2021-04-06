@@ -33,6 +33,12 @@ public class District extends APIClass{
         return false;
     }
 
+    /***
+     * This method fills a dictionary, which contains the 'ags' to each Landkreis.
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private void setDict() throws IOException, InterruptedException {
 
         JSONObject districts = new JSONObject(getDataFromAPIEndpoint(this.getURL())).getJSONObject("data");

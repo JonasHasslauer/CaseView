@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
 
         District district = new District("https://api.corona-zahlen.org/districts");
         State state = new State("https://api.corona-zahlen.org/states");
@@ -34,19 +34,19 @@ public class Main {
 
        System.out.println("Für welchen Landkreis benötigst du eine Übersicht?");
 
-       String wantedCounty = sc.nextLine();
+       String wantedDistrict = "";
 
         do{
-            wantedCounty = sc.nextLine();
-            if(!district.isValidDistrict(wantedCounty)){
-                System.out.println("Ungültig - Bitte geb nocheinmal dein Landkreis ein");
+            wantedDistrict = sc.nextLine();
+            if(!district.isValidDistrict(wantedDistrict)){
+                System.out.println("Ungültig - Bitte geb noch einmal dein Landkreis ein");
             }
-        }while(!district.isValidDistrict(wantedCounty));
+        }while(!district.isValidDistrict(wantedDistrict));
 
         sc.close();
 
         System.out.println(String.format("Die Inzidenz für deinen gewählten Landkreis '%s' liegt bei %,.0f",
-                wantedState, stateObj.getJSONObject(wantedCounty).getDouble("weekIncidence")));
+                wantedState, stateObj.getJSONObject(wantedDistrict).getDouble("weekIncidence")));
 
 
     }
