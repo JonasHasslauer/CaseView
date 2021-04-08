@@ -11,42 +11,39 @@ public class Main {
         State state = new State("https://api.corona-zahlen.org/states");
         Scanner sc = new Scanner(System.in);
 
+        // Hier geht es um das Bundesland
+
         System.out.println("Für welches Bundesland hättest du gerne die Zahlen?");
 
-        String wantedState = "";
-
         do{
-            wantedState = sc.nextLine();
-            if(!state.isValidState(wantedState)){
+            state.setWantedState(sc.nextLine());
+            if(!state.isValidState(state.getWantedState())){
                 System.out.println("Ungültig - Bitte geb noch einmal dein Bundesland ein");
             }
-        }while(!state.isValidState(wantedState));
+        }while(!state.isValidState(state.getWantedState()));
 
-       JSONObject stateObj = null;
-
-
-       stateObj = new JSONObject(state.getDataFromAPIEndpoint(state.getURL())).getJSONObject("data");
-
+       JSONObject stateObj = new JSONObject(state.getDataFromAPIEndpoint(state.getURL())).getJSONObject("data");
 
        System.out.println(String.format("Die Inzidenz für das Bundesland '%s' liegt bei %,.0f",
-               wantedState, stateObj.getJSONObject(wantedState).getDouble("weekIncidence")));
+               state.getWantedState(), stateObj.getJSONObject(state.getWantedState()).getDouble("weekIncidence")));
+
+
+       // Ab hier geht es um den Landkreis
 
 
        System.out.println("Für welchen Landkreis benötigst du eine Übersicht?");
 
-       String wantedDistrict = "";
-
         do{
-            wantedDistrict = sc.nextLine();
-            if(!district.isValidDistrict(wantedDistrict)){
+            district.setWantedDistrict(sc.nextLine());
+            if(!district.isValidDistrict(district.getWantedDistrict())){
                 System.out.println("Ungültig - Bitte geb noch einmal dein Landkreis ein");
             }
-        }while(!district.isValidDistrict(wantedDistrict));
+        }while(!district.isValidDistrict(district.getWantedDistrict()));
 
         sc.close();
 
         System.out.println(String.format("Die Inzidenz für deinen gewählten Landkreis '%s' liegt bei %,.0f",
-                wantedState, stateObj.getJSONObject(wantedDistrict).getDouble("weekIncidence")));
+                district.getWantedDistrict(), stateObj.getJSONObject(district.getWantedDistrict()).getDouble("weekIncidence")));
 
 
     }

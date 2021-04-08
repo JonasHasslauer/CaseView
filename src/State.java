@@ -19,6 +19,18 @@ public class State extends APIClass{
             "TH"
     };
 
+    private String wantedState;
+
+
+    public String getWantedState() {
+        return wantedState;
+    }
+
+    public void setWantedState(String wantedState) {
+        this.wantedState = wantedState;
+    }
+
+
     public State(String url) {
         super(url);
     }

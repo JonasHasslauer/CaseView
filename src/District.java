@@ -12,6 +12,15 @@ import java.util.Iterator;
 public class District extends APIClass{
 
     Dictionary<String, Integer> dict = new Hashtable<String, Integer>();
+    private String wantedDistrict;
+
+    public String getWantedDistrict() {
+        return wantedDistrict;
+    }
+
+    public void setWantedDistrict(String wantedDistrict) {
+        this.wantedDistrict = wantedDistrict;
+    }
 
     public District(String url) {
         super(url);
