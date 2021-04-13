@@ -1,11 +1,13 @@
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -15,31 +17,52 @@ public class District extends APIClass{
     private String wantedDistrict;
 
     public String getWantedDistrict() {
-        return wantedDistrict;
+        return this.wantedDistrict;
     }
 
     public void setWantedDistrict(String wantedDistrict) {
-        this.wantedDistrict = wantedDistrict;
+        if(wantedDistrict != null){
+            this.wantedDistrict = wantedDistrict;
+        }
     }
 
     public District(String url) {
         super(url);
-        try{
-            setDict();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setDict();
     }
 
-    public boolean isValidDistrict(String wantedCounty){
+    public String[] getAllDistricts(String state){
 
-        //TODO
+        State stateObj = new State("https://api.corona-zahlen.org/states");
+
+        String data = getDataFromAPIEndpoint(stateObj.getURL());
 
 
+        return null;
+    }
+
+    public boolean isValidDistrict(String wantedDistrict){
+
+        try{
+            if(this.dict.get(wantedDistrict) != 0){
+                return true;
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
 
         return false;
+
+    }
+
+    public String getAgsToDistrict(String wantedDistrict){
+
+        try{
+            return "0" + this.dict.get(wantedDistrict);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /***
@@ -48,7 +71,9 @@ public class District extends APIClass{
      * @throws IOException
      * @throws InterruptedException
      */
-    private void setDict() throws IOException, InterruptedException {
+    private void setDict(){
+
+        //TODO werden die integer werte ohne führende 0 in das Dictionary übernommen?
 
         JSONObject districts = new JSONObject(getDataFromAPIEndpoint(this.getURL())).getJSONObject("data");
         Iterator<String> key = districts.keys();

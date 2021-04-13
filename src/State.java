@@ -23,11 +23,13 @@ public class State extends APIClass{
 
 
     public String getWantedState() {
-        return wantedState;
+        return this.wantedState;
     }
 
     public void setWantedState(String wantedState) {
-        this.wantedState = wantedState;
+        if(wantedState != null){
+            this.wantedState = wantedState;
+        }
     }
 
 

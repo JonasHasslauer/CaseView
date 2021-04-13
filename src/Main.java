@@ -25,11 +25,12 @@ public class Main {
        JSONObject stateObj = new JSONObject(state.getDataFromAPIEndpoint(state.getURL())).getJSONObject("data");
 
        System.out.println(String.format("Die Inzidenz für das Bundesland '%s' liegt bei %,.0f",
-               state.getWantedState(), stateObj.getJSONObject(state.getWantedState()).getDouble("weekIncidence")));
+               state.getWantedState(),
+               stateObj.getJSONObject(
+                       state.getWantedState()).getDouble("weekIncidence")));
 
 
        // Ab hier geht es um den Landkreis
-
 
        System.out.println("Für welchen Landkreis benötigst du eine Übersicht?");
 
@@ -37,13 +38,19 @@ public class Main {
             district.setWantedDistrict(sc.nextLine());
             if(!district.isValidDistrict(district.getWantedDistrict())){
                 System.out.println("Ungültig - Bitte geb noch einmal dein Landkreis ein");
-            }
+            }else System.out.println("Der Ags ist " + district.getAgsToDistrict(district.getWantedDistrict()));
         }while(!district.isValidDistrict(district.getWantedDistrict()));
+
+        JSONObject districtObj = new JSONObject(district.getDataFromAPIEndpoint(district.getURL())).getJSONObject("data");
+
+        System.out.println(String.format("Die Inzident für deinen gewählten Landkreis '%s' liegt bei %,.2f",
+                district.getWantedDistrict(),
+                districtObj.getJSONObject(
+                        district.getAgsToDistrict(district.getWantedDistrict())).getDouble("weekIncidence")));
+
 
         sc.close();
 
-        System.out.println(String.format("Die Inzidenz für deinen gewählten Landkreis '%s' liegt bei %,.0f",
-                district.getWantedDistrict(), stateObj.getJSONObject(district.getWantedDistrict()).getDouble("weekIncidence")));
 
 
     }
