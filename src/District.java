@@ -16,7 +16,8 @@ public class District extends APIClass{
     }
 
     public void setWantedDistrict(String wantedDistrict) {
-        this.wantedDistrict = wantedDistrict;
+        this.wantedDistrict = (!wantedDistrict.substring(0,1).equals("LK")) ? "LK " + wantedDistrict : wantedDistrict;
+
     }
 
     public District(String url) {
@@ -26,10 +27,9 @@ public class District extends APIClass{
     public boolean isValidDistrict(String wantedDistrict){
 
         try{
-            if(this.districtKeyDictionary.get(wantedDistrict) instanceof Integer &&
-                    this.districtKeyDictionary.get(wantedDistrict) != null){
+            if(this.districtKeyDictionary.get(wantedDistrict) instanceof Integer){
                 return true;
-            } else return false;
+            }
         }catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -39,6 +39,7 @@ public class District extends APIClass{
     }
 
     public void setcommonDistrictKey(String wantedDistrict) {
+
         String var = String.valueOf(this.districtKeyDictionary.get(wantedDistrict));
         if(var.length() == 5){
             this.wantedDistrict = var;
@@ -80,7 +81,6 @@ public class District extends APIClass{
     public void setAllDistrictsToState(){
         //TODO neue Methode => Ausgabe aller Landkreise für das jeweilige Bundesland
     }
-
 
 
     public Dictionary getDistrictKeyDictionary(){
