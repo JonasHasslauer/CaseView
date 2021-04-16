@@ -1,5 +1,9 @@
 public class State extends APIClass{
 
+    public State(String url) {
+        super(url);
+    }
+
     String[] statesAbb = {
             "SH",
             "HH",
@@ -26,14 +30,7 @@ public class State extends APIClass{
     }
 
     public void setWantedState(String wantedState) {
-        if(wantedState != null){
-            this.wantedState = wantedState;
-        }
-    }
-
-
-    public State(String url) {
-        super(url);
+        this.wantedState = wantedState;
     }
 
     public boolean isValidState(String state){

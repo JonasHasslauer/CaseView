@@ -27,7 +27,9 @@ public class APIClass {
      * @throws IOException
      * @throws InterruptedException
      */
-    public String getDataFromAPIEndpoint(String url){
+    public String getTextFromApiEndpoint(String url){
+
+        if(url == null) return null;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -36,17 +38,17 @@ public class APIClass {
                 .uri(URI.create(url))
                 .build();
 
-        HttpResponse<String> response = null;
+        HttpResponse<String> response_text = null;
 
         try{
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            response_text = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return response.body();
+        return response_text.body();
 
     }
 

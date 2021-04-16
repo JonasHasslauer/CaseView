@@ -1,30 +1,22 @@
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
 public class District extends APIClass{
 
-    Dictionary<String, Integer> dict = new Hashtable<String, Integer>();
+    Dictionary<String, Integer> districtKeyDictionary = new Hashtable<String, Integer>();
     private String wantedDistrict;
-    private String ags;
+    private String commonDistrictKey;
+    private String[] allDistrictsToState;
 
     public String getWantedDistrict() {
         return this.wantedDistrict;
     }
 
     public void setWantedDistrict(String wantedDistrict) {
-        if(wantedDistrict != null){
-            this.wantedDistrict = wantedDistrict;
-        }
+        this.wantedDistrict = wantedDistrict;
     }
 
     public District(String url) {
@@ -34,9 +26,10 @@ public class District extends APIClass{
     public boolean isValidDistrict(String wantedDistrict){
 
         try{
-            if(this.dict.get(wantedDistrict) != 0){
+            if(this.districtKeyDictionary.get(wantedDistrict) instanceof Integer &&
+                    this.districtKeyDictionary.get(wantedDistrict) != null){
                 return true;
-            }
+            } else return false;
         }catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -45,36 +38,53 @@ public class District extends APIClass{
 
     }
 
-    public void setAgsToDistrict(String wantedDistrict) {
-        this.ags = "0" + (String.valueOf(this.dict.get(wantedDistrict)));
+    public void setcommonDistrictKey(String wantedDistrict) {
+        String var = String.valueOf(this.districtKeyDictionary.get(wantedDistrict));
+        if(var.length() == 5){
+            this.wantedDistrict = var;
+        }else this.commonDistrictKey = "0" + (String.valueOf(this.districtKeyDictionary.get(wantedDistrict)));
     }
 
-    public String getAgs(){
-        return this.ags;
+    public String getcommonDistrictKey(){
+        return this.commonDistrictKey;
     }
+
 
     /***
-     * This method fills a dictionary, which contains the 'ags' to each Landkreis.
+     * Creates the following dictionary: commonDistrictKey -> Name of the district and put it in the class variable
+     * Performs only with the an object containing the url: "https://api.corona-zahlen.org/districts";
+     * //TODO - nicht so starr machen
      *
-     * @throws IOException
-     * @throws InterruptedException
+     *
+     *
      */
-    public void createDict(){
+    public void createDistrictKeyDictionary(){
 
-        JSONObject districts = new JSONObject(getDataFromAPIEndpoint(this.getURL())).getJSONObject("data");
-        Iterator<String> key = districts.keys();
+        try {
+            JSONObject d = new JSONObject(getTextFromApiEndpoint(this.getURL())).getJSONObject("data");
+            Iterator<String> key = d.keys();
 
-        while(key.hasNext()){
-            String singleKey = key.next();
-            this.dict.put(districts.getJSONObject(singleKey).getString("county").trim(), Integer.valueOf(singleKey));
+            while(key.hasNext()){
+                String singleKey = key.next();
+                this.districtKeyDictionary.put(d.getJSONObject(singleKey).getString("county").trim(),
+                        Integer.valueOf(singleKey));
+            }
+        }catch(NullPointerException e){
+            e.printStackTrace();
         }
+    }
+    public String[] getAllDistrictsToState(){
+        return this.allDistrictsToState;
+    }
 
+    public void setAllDistrictsToState(){
+        //TODO neue Methode => Ausgabe aller Landkreise für das jeweilige Bundesland
     }
 
 
 
-    public Dictionary getDict(){
-        return this.dict;
+    public Dictionary getDistrictKeyDictionary(){
+        return this.districtKeyDictionary;
     }
 
 
