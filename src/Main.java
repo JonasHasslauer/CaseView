@@ -1,15 +1,22 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Main {
+
+    Date date;
 
     public static void main(String[] args) {
 
         District district = new District("https://api.corona-zahlen.org/districts");
         State state = new State("https://api.corona-zahlen.org/states");
         Scanner sc = new Scanner(System.in);
+        district.createDict();
 
         // Hier geht es um das Bundesland
 
@@ -22,11 +29,11 @@ public class Main {
             }
         }while(!state.isValidState(state.getWantedState()));
 
-       JSONObject stateObj = new JSONObject(state.getDataFromAPIEndpoint(state.getURL())).getJSONObject("data");
+       JSONObject stateJSONObj = new JSONObject(state.getDataFromAPIEndpoint(state.getURL())).getJSONObject("data");
 
        System.out.println(String.format("Die Inzidenz für das Bundesland '%s' liegt bei %,.0f",
                state.getWantedState(),
-               stateObj.getJSONObject(
+               stateJSONObj.getJSONObject(
                        state.getWantedState()).getDouble("weekIncidence")));
 
 
@@ -38,16 +45,33 @@ public class Main {
             district.setWantedDistrict(sc.nextLine());
             if(!district.isValidDistrict(district.getWantedDistrict())){
                 System.out.println("Ungültig - Bitte geb noch einmal dein Landkreis ein");
-            }else System.out.println("Der Ags ist " + district.getAgsToDistrict(district.getWantedDistrict()));
+            }else {
+                district.setAgsToDistrict(district.getWantedDistrict());
+                System.out.println("Der Ags ist " + district.getAgs());
+            }
         }while(!district.isValidDistrict(district.getWantedDistrict()));
 
-        JSONObject districtObj = new JSONObject(district.getDataFromAPIEndpoint(district.getURL())).getJSONObject("data");
+        JSONObject districtJSONObj = new JSONObject(district.getDataFromAPIEndpoint(district.getURL())).getJSONObject("data");
 
-        System.out.println(String.format("Die Inzident für deinen gewählten Landkreis '%s' liegt bei %,.2f",
+        System.out.println(String.format("Die Inzidenz für deinen gewählten Landkreis '%s' liegt bei %,.2f",
                 district.getWantedDistrict(),
-                districtObj.getJSONObject(
-                        district.getAgsToDistrict(district.getWantedDistrict())).getDouble("weekIncidence")));
+                districtJSONObj.getJSONObject(
+                        district.getAgs()).getDouble("weekIncidence")));
 
+        District historyincidence = new District("https://api.corona-zahlen.org/districts/history/incidence");
+
+        System.out.println("Die Inzidenz der letzten Tage liegt bei: ");
+
+        String histIncidence = historyincidence.getDataFromAPIEndpoint(historyincidence.getURL());
+
+        JSONArray histIncidenceArray = new JSONObject(histIncidence).getJSONObject("data").
+                getJSONObject(district.getAgs()).getJSONArray("history");
+
+        for(int i = histIncidenceArray.length() - 1; i >= 0; i--){
+            System.out.println(String.format("Die Inzidenz für den %s liegt bei %,.2f => %s",
+                   histIncidenceArray.getJSONObject(i).get("date").toString().substring(0 ,10),
+                    histIncidenceArray.getJSONObject(i).getDouble("weekIncidence")));
+        }
 
         sc.close();
 

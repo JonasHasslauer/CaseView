@@ -21,7 +21,6 @@ public class State extends APIClass{
 
     private String wantedState;
 
-
     public String getWantedState() {
         return this.wantedState;
     }

@@ -15,6 +15,7 @@ public class District extends APIClass{
 
     Dictionary<String, Integer> dict = new Hashtable<String, Integer>();
     private String wantedDistrict;
+    private String ags;
 
     public String getWantedDistrict() {
         return this.wantedDistrict;
@@ -28,17 +29,6 @@ public class District extends APIClass{
 
     public District(String url) {
         super(url);
-        setDict();
-    }
-
-    public String[] getAllDistricts(String state){
-
-        State stateObj = new State("https://api.corona-zahlen.org/states");
-
-        String data = getDataFromAPIEndpoint(stateObj.getURL());
-
-
-        return null;
     }
 
     public boolean isValidDistrict(String wantedDistrict){
@@ -55,14 +45,12 @@ public class District extends APIClass{
 
     }
 
-    public String getAgsToDistrict(String wantedDistrict){
+    public void setAgsToDistrict(String wantedDistrict) {
+        this.ags = "0" + (String.valueOf(this.dict.get(wantedDistrict)));
+    }
 
-        try{
-            return "0" + this.dict.get(wantedDistrict);
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
-        return null;
+    public String getAgs(){
+        return this.ags;
     }
 
     /***
@@ -71,9 +59,7 @@ public class District extends APIClass{
      * @throws IOException
      * @throws InterruptedException
      */
-    private void setDict(){
-
-        //TODO werden die integer werte ohne führende 0 in das Dictionary übernommen?
+    public void createDict(){
 
         JSONObject districts = new JSONObject(getDataFromAPIEndpoint(this.getURL())).getJSONObject("data");
         Iterator<String> key = districts.keys();
@@ -84,6 +70,8 @@ public class District extends APIClass{
         }
 
     }
+
+
 
     public Dictionary getDict(){
         return this.dict;
