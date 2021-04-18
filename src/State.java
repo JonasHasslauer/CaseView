@@ -1,4 +1,4 @@
-public class State extends APIClass{
+public class State extends ConnHandler {
 
     public State(String url) {
         super(url);
