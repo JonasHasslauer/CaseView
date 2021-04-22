@@ -8,7 +8,6 @@ public class District extends ConnHandler {
     private String wantedDistrict;
     private String commonDistrictKey;
     private String[] allDistrictsToState;
-    private Dictionaries dict = new Dictionaries();
 
     public District(String endpointUrl) {
         super(endpointUrl);
@@ -18,7 +17,7 @@ public class District extends ConnHandler {
     }
 
     public void setWantedDistrict(String wantedDistrict) {
-        this.wantedDistrict = (!wantedDistrict.substring(0,1).equals("LK")) ? "LK " + wantedDistrict : wantedDistrict;
+        this.wantedDistrict = wantedDistrict;
     }
 
     public String getWantedDistrict() {
@@ -33,6 +32,7 @@ public class District extends ConnHandler {
         }catch (NullPointerException e){
             e.printStackTrace();
         }
+
         return false;
     }
 

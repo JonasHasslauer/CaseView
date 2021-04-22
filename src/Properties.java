@@ -3,13 +3,10 @@ public enum Properties {
     DISTRICT("https://api.corona-zahlen.org/districts"),
     STATES("https://api.corona-zahlen.org/states");
 
-    private String url;
+    final String url;
 
     Properties(String url) {
         this.url = url;
     }
 
-    String url(){
-        return this.url;
-    }
 }

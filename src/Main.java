@@ -6,10 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        District district = new District(Properties.DISTRICT.url());
-        State state = new State(Properties.STATES.url());
+        District district = new District(Properties.DISTRICT.url);
+        State state = new State(Properties.STATES.url);
         Scanner sc = new Scanner(System.in);
-        Dictionaries dict = new Dictionaries();
 
         // Hier geht es um das Bundesland
 
@@ -17,9 +16,11 @@ public class Main {
 
         askForState(state, sc);
 
+        /*
+
         JSONObject state_json_obj = new JSONObject(state.getTextFromApiEndpoint()).getJSONObject("data");
 
-        /*
+
         System.out.println(String.format("Die Inzidenz für das Bundesland '%s' liegt bei %,.0f",
                state.getWantedState(),
                state_json_obj.getJSONObject(
@@ -42,7 +43,7 @@ public class Main {
                 district_json_obj.getJSONObject(
                         district.getcommonDistrictKey()).getDouble("weekIncidence")));
 
-        District historyincidence = new District(Properties.INCIDENCE.url());
+        District historyincidence = new District(Properties.INCIDENCE.url);
 
         System.out.println(String.format("Hier die Inzidenz für %d Tage", 3));
 
@@ -55,6 +56,13 @@ public class Main {
 
         sc.close();
     }
+
+
+
+
+
+
+
 
     private static void getIncidenceHistoryForNthDays(JSONArray histIncidenceArray, int N) {
         for(int i = histIncidenceArray.length() - 1; i >= histIncidenceArray.length() - N; i--){

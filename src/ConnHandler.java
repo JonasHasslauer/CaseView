@@ -6,13 +6,13 @@ import java.net.http.HttpResponse;
 
 public class ConnHandler {
 
-    private String endpointUrl;
+    private final String endpointUrl;
 
     public ConnHandler(String endpointUrl){
         this.endpointUrl = endpointUrl;
     }
 
-   public String getURL(){
+    public String getURL(){
        return this.endpointUrl;
    }
 

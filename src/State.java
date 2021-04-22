@@ -4,7 +4,7 @@ public class State extends ConnHandler {
         super(url);
     }
 
-    String[] statesAbb = {
+    final private static String[] statesAbbreviation = {
             "SH",
             "HH",
             "NI",
@@ -36,7 +36,7 @@ public class State extends ConnHandler {
     public boolean isValidState(String state){
 
         if(state.length() == 2){
-            for(String x : this.statesAbb){
+            for(String x : statesAbbreviation){
                 if(state.equalsIgnoreCase(x)){
                     return true;
                 }
