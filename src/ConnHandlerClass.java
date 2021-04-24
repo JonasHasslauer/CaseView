@@ -4,11 +4,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class ConnHandler {
+public class ConnHandlerClass {
 
     private final String endpointUrl;
 
-    public ConnHandler(String endpointUrl){
+    public ConnHandlerClass(String endpointUrl){
         this.endpointUrl = endpointUrl;
     }
 

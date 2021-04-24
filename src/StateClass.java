@@ -1,6 +1,6 @@
-public class State extends ConnHandler {
+public class StateClass extends ConnHandlerClass {
 
-    public State(String url) {
+    public StateClass(String url) {
         super(url);
     }
 

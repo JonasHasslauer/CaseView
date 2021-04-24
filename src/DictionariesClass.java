@@ -3,7 +3,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Dictionaries {
+public class DictionariesClass {
 
     static final HashMap<String, Integer> districtKeyDictionary = new HashMap<String, Integer>();
 

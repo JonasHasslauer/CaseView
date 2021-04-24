@@ -1,8 +1,8 @@
 import java.util.Date;
 
-public class History extends District{
+public class HistoryClass extends DistrictClass{
 
-    public History(String endpointUrl) {
+    public HistoryClass(String endpointUrl) {
         super(endpointUrl);
     }
 
