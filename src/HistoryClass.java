@@ -6,13 +6,4 @@ public class HistoryClass extends DistrictClass{
         super(endpointUrl);
     }
 
-
-
-
-    public Date getDateFromHistoryObject(){
-
-        return null;
-
-    }
-
 }

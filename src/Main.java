@@ -12,7 +12,7 @@ public class Main {
 
         // Hier geht es um das Bundesland
 
-        System.out.println("Für welches Bundesland hättest du gerne die Zahlen? 🥰");
+        System.out.println("Für welches Bundesland hättest du gerne die Zahlen?");
 
         askForState(state, sc);
 
@@ -57,13 +57,6 @@ public class Main {
 
         sc.close();
     }
-
-
-
-
-
-
-
 
     private static void getIncidenceHistoryForNthDays(JSONArray jsonArray, int days) {
         for(int i = jsonArray.length() - 1; i >= jsonArray.length() - days; i--){

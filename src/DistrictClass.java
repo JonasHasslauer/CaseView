@@ -4,7 +4,6 @@ public class DistrictClass extends ConnHandlerClass {
 
     private String wantedDistrict;
     private String commonDistrictKey;
-    private String[] allDistrictsToState;
 
     public DistrictClass(String endpointUrl) {
         super(endpointUrl);
@@ -44,10 +43,6 @@ public class DistrictClass extends ConnHandlerClass {
 
     public String getcommonDistrictKey(){
         return this.commonDistrictKey;
-    }
-
-    public String[] getAllDistrictsToState(){
-        return this.allDistrictsToState;
     }
 
 
